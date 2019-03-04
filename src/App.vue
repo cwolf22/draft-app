@@ -1,29 +1,88 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+<v-app id="inspire" dark>
+    <v-navigation-drawer
+      clipped
+      fixed
+      v-model="drawer"
+      app>
+      <v-list dense>
+        <v-list-tile to="/">
+          <v-list-tile-action>
+            <v-icon>home</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Home</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <template v-if="!AUTHENTICATED">
+          <v-list-tile to="/login">
+            <v-list-tile-action>
+              <v-icon>create</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Login/Sign Up</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </template>
+        <template v-else>
+          <v-list-tile to="/account">
+            <v-list-tile-action>
+              <v-icon>account_box</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Account</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile to="/leagues">
+            <v-list-tile-action>
+              <v-icon>settings</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Leagues</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile @click="logout">
+            <v-list-tile-action>
+              <v-icon>cancel</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Logout</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </template>
+      </v-list>
+    </v-navigation-drawer>
+    <v-toolbar app fixed clipped-left>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-title>Baiting Sheep - Draft App</v-toolbar-title>
+    </v-toolbar>
+    <v-content>
+      <router-view />
+    </v-content>
+    <v-footer app fixed>
+      <span>&copy; 2019</span>
+    </v-footer>
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+import { mapGetters } from 'vuex'
+export default {
+  name: 'App',
+  data () {
+    return {
+      drawer: true,
+    }
+  },
+  computed: {
+    ...mapGetters(['AUTHENTICATED']),
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('LOGOUT')
+        .then(() => this.$router.push('/'))
+        .catch(err => console.log(err))
     }
   }
 }
-</style>
+</script>
