@@ -8,7 +8,7 @@
           <form @submit="submit">
             <v-card class="elevation-12">
               <v-toolbar dark color="primary">
-                <v-toolbar-title>Login Form</v-toolbar-title>
+                <v-toolbar-title>Registration</v-toolbar-title>
               </v-toolbar>
               <v-card-text>
                 <v-text-field

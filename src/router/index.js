@@ -19,6 +19,7 @@ export default new Router({
     route('/about', 'About'),
     route('/register', 'Register'),
     route('/login', 'Login'),
-    route('/leagues', 'Leagues')
+    route('/leagues', 'Leagues'),
+    route('/calendar', 'Calendar'),
   ],
 });
