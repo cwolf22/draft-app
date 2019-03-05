@@ -1,7 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexPersistence from 'vuex-persist';
+import DrafterService from '@/sdk/DrafterService';
 
+const drafterAPI = new DrafterService().drafterAPI;
 Vue.use(Vuex);
 
 const userStorage = new VuexPersistence({
@@ -32,13 +34,41 @@ export default new Vuex.Store({
   },
   actions: {
     REGISTER: ({ commit }, payload) => {
-      alert("REGISTER");
+      const promise = new Promise((resolve, reject) => {
+        drafterAPI.register(payload.email, payload.password)
+          .then((resp) => {
+            commit('SET_USER', payload.email);
+            commit('SET_TOKEN', resp.data.token);
+            console.log(resp);
+            resolve(resp);
+          })
+          .catch((err) => {
+            commit('SET_USER', '');
+            commit('SET_TOKEN', '');
+            console.log(err);
+            reject(err);
+          });
+      });
+      return promise;
     },
     LOGIN: ({ commit }, payload) => {
-      commit('SET_USER', 'ass');
-      commit('SET_TOKEN', 'ass');
+      const promise = new Promise((resolve, reject) => {
+        drafterAPI.login(payload.email, payload.password)
+          .then((resp) => {
+            commit('SET_USER', payload.email);
+            commit('SET_TOKEN', resp.data.token);
+            resolve(resp);
+          })
+          .catch((err) => {
+            commit('SET_USER', '');
+            commit('SET_TOKEN', '');
+            reject(err);
+          });
+      });
+      return promise;
     },
-    LOGOUT: ({ commit }) => {
+    LOGOUT: ({ commit, state }) => {
+      drafterAPI.logout(state.email, state.token);
       commit('SET_USER', '');
       commit('SET_TOKEN', '');
     },
