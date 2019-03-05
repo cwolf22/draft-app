@@ -55,6 +55,9 @@
     <v-toolbar app fixed clipped-left>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Baiting Sheep - Draft App</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn flat v-if="!AUTHENTICATED" to="/login" active-class="">Login / Register</v-btn>
+      <v-btn flat v-else @click="logout">Logout</v-btn>
     </v-toolbar>
     <v-content>
       <router-view />
