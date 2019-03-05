@@ -17,7 +17,7 @@ const drafterAPI = () => {
     }),
     login: (email, password) => new Promise((resolve, reject) => {
       console.log('[api] - login user');
-      HTTPService.action(POST, API.LOGIN_USER(), { data:{ email, password } })
+      HTTPService.action(POST, API.LOGIN_USER(), { data: { email, password } })
         .then(response => response.data)
         .then(data => resolve(data))
         .catch(err => reject(err));

@@ -1,13 +1,49 @@
 <template>
 <v-container>
-    <v-layout text-xs-center wrap>
+  <v-layout text-xs-center wrap>
+    <v-flex
+      sm4
+      xs12
+      class="text-sm-left text-xs-center pb-2"
+    >
+      <v-btn @click="$refs.calendar.prev()">
+        <v-icon
+          dark
+          left
+        >
+          keyboard_arrow_left
+        </v-icon>
+        Prev
+      </v-btn>
+    </v-flex>
+    <v-flex
+      sm4
+      xs12
+      class="text-xs-center"
+    ><h2 class="pt-2">{{ selectedDate.month }} {{ selectedDate.year }}</h2>
+    </v-flex>
+    <v-flex
+      sm4
+      xs12
+      class="text-sm-right text-xs-center"
+    >
+      <v-btn @click="$refs.calendar.next()">
+        Next
+        <v-icon
+          right
+          dark
+        >
+          keyboard_arrow_right
+        </v-icon>
+      </v-btn>
+    </v-flex>
       <v-flex xs12>
-        <h1 class="pb-5">Calendar</h1>
         <v-sheet height="500">
           <v-calendar
-            :now="today"
-            :value="today"
+            v-model="date"
             color="primary"
+            type="month"
+            ref="calendar"
           >
             <template v-slot:day="{ date }">
               <template v-for="event in eventsMap[date]">
@@ -41,23 +77,12 @@
                       <v-toolbar-title v-html="event.title"></v-toolbar-title>
                       <v-spacer></v-spacer>
                       <v-btn icon>
-                        <v-icon>favorite</v-icon>
-                      </v-btn>
-                      <v-btn icon>
                         <v-icon>more_vert</v-icon>
                       </v-btn>
                     </v-toolbar>
                     <v-card-title primary-title>
                       <span v-html="event.details"></span>
                     </v-card-title>
-                    <v-card-actions>
-                      <v-btn
-                        flat
-                        color="secondary"
-                      >
-                        Cancel
-                      </v-btn>
-                    </v-card-actions>
                   </v-card>
                 </v-menu>
               </template>
@@ -65,14 +90,20 @@
           </v-calendar>
         </v-sheet>
      </v-flex>
-   </v-layout>
+     
+  </v-layout>
 </v-container>
 </template>
 
 <script>
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
   export default {
     data: () => ({
-      today: '2019-01-08',
+      date: new Date().toISOString(),
+      type: 'month',
       events: [
         {
           title: 'Vacation',
@@ -122,7 +153,7 @@
           date: '2019-02-05',
           open: false
         }
-      ]
+      ],
     }),
     computed: {
       // convert the list of events into a map of lists keyed by date
@@ -130,6 +161,13 @@
         const map = {}
         this.events.forEach(e => (map[e.date] = map[e.date] || []).push(e))
         return map
+      },
+      selectedDate() {
+        const datar = this.date.split('-');
+        return {
+          month: monthNames[parseInt(datar[1]) -1 ],
+          year: datar[0]
+        }
       }
     },
     methods: {
