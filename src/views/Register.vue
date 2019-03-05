@@ -70,7 +70,7 @@
     methods: {
       submit() {
         this.$store.dispatch('REGISTER', { email:this.email, password:this.password })
-         .then(() => this.$router.push('/'))
+         .then(() => this.$router.push('/leagues'))
          .catch(err => console.log(err))
       }
     }

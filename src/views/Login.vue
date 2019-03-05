@@ -56,8 +56,8 @@
     },
     methods: {
       submit() {
-        this.$store.dispatch('LOGIN', { email:this.email, password:this.password })
-         .then(() => this.$router.push('/'))
+        this.$store.dispatch('LOGIN', { email: this.email, password: this.password })
+         .then(() => this.$router.push('/leagues'))
          .catch(err => console.log(err))
       }
     }

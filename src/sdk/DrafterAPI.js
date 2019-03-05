@@ -17,14 +17,14 @@ const drafterAPI = () => {
     }),
     login: (email, password) => new Promise((resolve, reject) => {
       console.log('[api] - login user');
-      HTTPService.action(POST, API.LOGIN_USER, { email, password })
+      HTTPService.action(POST, API.LOGIN_USER(), { data:{ email, password } })
         .then(response => response.data)
         .then(data => resolve(data))
         .catch(err => reject(err));
     }),
     logout: (email, token) => new Promise((resolve, reject) => {
       console.log('[api] - logout user');
-      HTTPService.action(POST, API.LOGOUT_USER, { email, token })
+      HTTPService.action(POST, API.LOGOUT_USER(), { email, token })
         .then(response => response.data)
         .then(data => resolve(data))
         .catch(err => reject(err));
