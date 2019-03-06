@@ -72,6 +72,18 @@ export default new Vuex.Store({
       commit('SET_USER', '');
       commit('SET_TOKEN', '');
     },
+    ADD_LEAGUE: ({ commit }, payload) => {
+      const promise = new Promise((resolve, reject) => {
+        drafterAPI.addLeague(payload)
+        .then((resp) => {
+          resolve(resp);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+    return promise;
+    },
   },
   plugins: [userStorage.plugin],
 });

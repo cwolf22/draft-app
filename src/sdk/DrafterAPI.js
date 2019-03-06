@@ -24,7 +24,13 @@ const drafterAPI = () => {
     }),
     logout: (email, token) => new Promise((resolve, reject) => {
       console.log('[api] - logout user');
-      HTTPService.action(POST, API.LOGOUT_USER(), { email, token })
+      HTTPService.action(POST, API.LOGOUT_USER(), { data: { email, password } })
+        .then(response => response.data)
+        .then(data => resolve(data))
+        .catch(err => reject(err));
+    }),
+    addLeague: (email, form) => new Promise((resolve, reject) => {
+      HTTPService.action(POST, API.ADD_LEAGUE(email), { data: form })
         .then(response => response.data)
         .then(data => resolve(data))
         .catch(err => reject(err));
