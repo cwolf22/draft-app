@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 import VuexPersistence from 'vuex-persist';
 import DrafterService from '@/sdk/DrafterService';
 
-const drafterAPI = new DrafterService().drafterAPI;
+const { drafterAPI } = new DrafterService();
 Vue.use(Vuex);
 
 const userStorage = new VuexPersistence({
@@ -20,9 +20,7 @@ export default new Vuex.Store({
     token: '',
   },
   getters: {
-    AUTHENTICATED: (state) => {
-      return state.token.length > 0;
-    },
+    AUTHENTICATED: state => state.token.length > 0,
   },
   mutations: {
     SET_USER: (state, payload) => {
@@ -35,7 +33,8 @@ export default new Vuex.Store({
   actions: {
     REGISTER: ({ commit }, payload) => {
       const promise = new Promise((resolve, reject) => {
-        drafterAPI.register(payload.email, payload.password)
+        drafterAPI
+          .register(payload.email, payload.password)
           .then((resp) => {
             commit('SET_USER', payload.email);
             commit('SET_TOKEN', resp.data.token);
@@ -53,7 +52,8 @@ export default new Vuex.Store({
     },
     LOGIN: ({ commit }, payload) => {
       const promise = new Promise((resolve, reject) => {
-        drafterAPI.login(payload.email, payload.password)
+        drafterAPI
+          .login(payload.email, payload.password)
           .then((resp) => {
             commit('SET_USER', payload.email);
             commit('SET_TOKEN', resp.data.token);
@@ -74,15 +74,16 @@ export default new Vuex.Store({
     },
     ADD_LEAGUE: ({ commit }, payload) => {
       const promise = new Promise((resolve, reject) => {
-        drafterAPI.addLeague(payload)
-        .then((resp) => {
-          resolve(resp);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
-    return promise;
+        drafterAPI
+          .addLeague(payload)
+          .then((resp) => {
+            resolve(resp);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
+      return promise;
     },
   },
   plugins: [userStorage.plugin],
