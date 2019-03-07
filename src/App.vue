@@ -1,6 +1,6 @@
 <template>
 <v-app id="inspire">
-  <!--<navigation /> -->
+  <navigation />
     <v-content>
       <router-view />
     </v-content>
@@ -12,12 +12,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
-//import Navigation from '@/components/Navigation'
+import Navigation from '@/components/Navigation'
 
 export default {
   name: 'App',
   components: {
-    //Navigation
+    Navigation
   },
 }
 </script>
