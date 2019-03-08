@@ -72,10 +72,10 @@ export default new Vuex.Store({
       commit('SET_USER', '');
       commit('SET_TOKEN', '');
     },
-    ADD_LEAGUE: ({ commit }, payload) => {
+    IMPORT_LEAGUES: ({ commit, state }, payload) => {
       const promise = new Promise((resolve, reject) => {
         drafterAPI
-          .addLeague(payload)
+          .importLeagues(state.user, state.token, payload)
           .then((resp) => {
             resolve(resp);
           })

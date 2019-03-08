@@ -6,6 +6,8 @@ const API = {
   REGISTER_USER: () => `${API_BASE}/register`,
   LOGIN_USER: () => `${API_BASE}/login`,
   LOGOUT_USER: () => `${API_BASE}/logout`,
+
+  IMPORT_LEAGUES: (user, sport) => `${API_BASE}/leagues/${user}/${sport}`,
 };
 
 export default API;
