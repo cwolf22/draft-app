@@ -24,7 +24,7 @@ const drafterAPI = () => {
     }),
     logout: (email, token) => new Promise((resolve, reject) => {
       console.log('[api] - logout user');
-      HTTPService.action(POST, API.LOGOUT_USER(), { data: { email, password } })
+      HTTPService.action(POST, API.LOGOUT_USER(), { data: { email, token } })
         .then(response => response.data)
         .then(data => resolve(data))
         .catch(err => reject(err));
