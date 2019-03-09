@@ -3,12 +3,13 @@ import Router from 'vue-router';
 
 Vue.use(Router);
 
-function route(path, view, meta = {}, children = []) {
+function route(path, view, meta = {}, children = [], params = {}) {
   return {
     path,
     name: view,
     meta,
     children,
+    params,
     component: () => import(`@/views/${view}`),
   };
 }
@@ -21,8 +22,8 @@ const router = new Router({
     route('/about', 'About'),
     route('/register', 'Register', { authenticatedRedirect: '/leagues' }),
     route('/login', 'Login', { authenticatedRedirect: '/leagues' }),
-    route('/leagues', 'Leagues', { requiresAuth: true } ),
-    route('/leagues/add', 'LeagueAdd', { requiresAuth: true }),
+    route('/leagues', 'Leagues', { requiresAuth: true }),
+    route('/leagues/import', 'Leagues', {showImport: true }),
     route('/calendar', 'Calendar', { requiresAuth: true }),
   ],
 });

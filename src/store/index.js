@@ -18,6 +18,7 @@ export default new Vuex.Store({
   state: {
     user: '',
     token: '',
+    importing: false
   },
   getters: {
     AUTHENTICATED: state => state.token.length > 0,

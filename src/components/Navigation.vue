@@ -49,12 +49,12 @@
                 <v-list-tile-title>Overview</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile>
+            <v-list-tile to="/leagues/import">
               <v-list-tile-action>
                 <v-icon>add</v-icon>
               </v-list-tile-action>
               <v-list-tile-content>
-                <v-list-tile-title>Add New</v-list-tile-title>
+                <v-list-tile-title>Import...</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
           </v-list-group>
@@ -80,16 +80,21 @@
     <v-toolbar app fixed clipped-left  color="primary" dark>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Baiting Sheep - Draft App</v-toolbar-title>
-      <v-spacer></v-spacer>
+      <v-spacer />
       <v-btn flat v-if="!AUTHENTICATED" to="/login" active-class="">Login / Register</v-btn>
       <v-btn flat v-else @click="logout">Logout</v-btn>
     </v-toolbar>
+    <league-import :show.sync="showImport"/>
   </section>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
+import LeagueImport from '@/views/LeagueImport'
 export default {
+    components: {
+      LeagueImport,
+    },
     data() {
         return {
           drawer: false,
@@ -104,7 +109,6 @@ export default {
         .then(() => this.$router.push('/'))
         .catch(err => console.log(err))
     }
-  }
+  },
 }
 </script>
-
