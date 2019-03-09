@@ -44,7 +44,7 @@
               </v-layout>
                 <v-text-field
                   prepend-icon="person"
-                  v-model="form.username"
+                  v-model="form.user"
                   v-validate="'required'"
                   :error-messages="errors.collect('username')"
                   label="Username"
@@ -68,19 +68,31 @@
       </v-card> 
     </v-dialog>
     <v-dialog
-      v-model="working"
+      v-model="worker.show"
      
       persistent
       width="300">
       <v-card
-        color="primary"
+        :color="worker.color"
         dark>
         <v-card-text>
             <v-layout>
-          Importing League... <!--<v-spacer /><v-icon style="margin-top:-10px">indeterminate_check_box</v-icon> -->
+              <template v-if="worker.color == 'primary'">
+                  Importing League...
+              </template>
+              <template v-else-if="worker.color == 'success'">
+                  Import Complete!
+                  <v-spacer />
+                  <v-icon>done</v-icon>
+              </template>
+              <template v-else>
+                  Import Failed!
+              </template>
+           <!--<v-spacer /><v-icon style="margin-top:-10px">indeterminate_check_box</v-icon> -->
             </v-layout>
           <v-progress-linear
-            indeterminate
+            :indeterminate="worker.color == 'primary'"
+            :value="worker.color == 'primary'? 0 : 100"
             color="white"
             class="mb-0"
           ></v-progress-linear>
@@ -95,18 +107,22 @@
     data() {
       return {
         show: false,
-        working: false,
+        working: true,
         form: {
             user: '',
             password: '',
             sport: '',
             site: ''
         },
+        worker: {
+          show: false,
+          color: "primary",
+        }
       }
     },
     computed: {
         completed() {
-            return this.form.email && this.form.password && this.form.sport && this.form.site;
+            return this.form.user && this.form.password && this.form.sport && this.form.site;
         }
     },
     methods: {
@@ -117,23 +133,30 @@
             this.form.site = ''
         },
         close() { 
-            this.show = false;
             this.resetForm();
             this.$router.back();
         },
         submit() {
-            alert('called')
-          this.$emit('update:show', false)
-          this.working = true
+          this.worker.show = true;
           this.$store.dispatch('IMPORT_LEAGUES', { 
-              username: this.form.username, 
+              username: this.form.user, 
               password: this.form.password, 
               sport: this.form.sport, 
-              type: this.form.type })
-            .then((data) => this.working = false)
-            .catch(err => {
-              this.working = false;
-              this.$emit('update:show', true)
+              type: this.form.site })
+            .then((data) => {
+              this.worker.color="success";
+              setTimeout(() => {
+                this.worker.show = false;
+                this.worker.color = 'primary';
+                this.resetForm();
+                this.$router.back();
+              }, 2000)
+            }).catch(err => {
+              this.worker.color="error";
+              setTimeout(() => {
+                this.worker.show = false;
+                this.worker.color = 'primary';
+              }, 2000)
           });
         }
     },

@@ -84,7 +84,6 @@
       <v-btn flat v-if="!AUTHENTICATED" to="/login" active-class="">Login / Register</v-btn>
       <v-btn flat v-else @click="logout">Logout</v-btn>
     </v-toolbar>
-    <league-import :show.sync="showImport"/>
   </section>
 </template>
 

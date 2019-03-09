@@ -31,6 +31,7 @@ const drafterAPI = () => {
     }),
     importLeagues: (email, token, payload) => new Promise((resolve, reject) => {
       console.log('[api] - import leagues');
+      console.log(payload)
       HTTPService.action(POST, API.IMPORT_LEAGUES(email, payload.sport), { 
           data: payload, 
           headers :{ authorization: `Bearer ${token}` } })

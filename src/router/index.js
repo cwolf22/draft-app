@@ -23,7 +23,7 @@ const router = new Router({
     route('/register', 'Register', { authenticatedRedirect: '/leagues' }),
     route('/login', 'Login', { authenticatedRedirect: '/leagues' }),
     route('/leagues', 'Leagues', { requiresAuth: true }),
-    route('/leagues/import', 'Leagues', {showImport: true }),
+    route('/leagues/import', 'Leagues', { requiresAuth: true, showImport: true }),
     route('/calendar', 'Calendar', { requiresAuth: true }),
   ],
 });
@@ -34,7 +34,7 @@ router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
   console.log(requiresAuth)
   if (requiresAuth && !authenticated) {
-    next("/");
+    next("/login");
     return;
   }
   if (to.meta.authenticatedRedirect && authenticated) {
