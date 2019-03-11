@@ -15,7 +15,7 @@
         <v-container grid-list-md>
         <v-layout justify-center>
         <v-flex xs12 sm8 md7>
-          <form @submit="close">
+          <form @submit="submit">
               <v-layout row wrap>
               <v-flex xs12 sm6>
                 <v-select
@@ -60,6 +60,7 @@
                   data-vv-name="password"
                   type="password"
                   required></v-text-field>
+                <v-btn style="display:none;" @click.prevent="submit" type="submit" :disabled="errors.any() || !completed"></v-btn>
           </form>
         </v-flex>
       </v-layout>
@@ -130,7 +131,8 @@
             this.form.user = '',
             this.form.password = '',
             this.form.sport = '',
-            this.form.site = ''
+            this.form.site = '',
+            setTimeout(() => this.errors.clear(), 500);
         },
         close() { 
             this.resetForm();
@@ -150,13 +152,13 @@
                 this.worker.color = 'primary';
                 this.resetForm();
                 this.$router.back();
-              }, 2000)
+              }, 1500)
             }).catch(err => {
               this.worker.color="error";
               setTimeout(() => {
                 this.worker.show = false;
                 this.worker.color = 'primary';
-              }, 2000)
+              }, 1500)
           });
         }
     },

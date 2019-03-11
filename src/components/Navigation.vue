@@ -41,7 +41,7 @@
                 </v-list-tile-content>
               </v-list-tile>
             </template>    
-            <v-list-tile to="/leagues" v-ripple="{ center: true }">
+            <v-list-tile to="/leagues" exact v-ripple="{ center: true }">
               <v-list-tile-action>
                 <v-icon>view_array</v-icon>
               </v-list-tile-action>
@@ -79,7 +79,7 @@
     </v-navigation-drawer>
     <v-toolbar app fixed clipped-left  color="primary" dark>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Baiting Sheep - Draft App</v-toolbar-title>
+      <v-toolbar-title>Baiting Sheep - Fantasy App</v-toolbar-title>
       <v-spacer />
       <v-btn flat v-if="!AUTHENTICATED" to="/login" active-class="">Login / Register</v-btn>
       <v-btn flat v-else @click="logout">Logout</v-btn>

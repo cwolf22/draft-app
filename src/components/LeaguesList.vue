@@ -1,16 +1,31 @@
 <template>
-  <v-container>
-    <h2> {{ sport }}</h2>
+  <v-container style="padding-top:0px;">
     <v-data-iterator
         :items="leagues"
-        :rows-per-page-items="[4]"
+        :rows-per-page-items="displayOptions"
         :pagination.sync="pagination"
-        :loading="!loaded"
+        content-tag="v-layout"
         row
         wrap
       >
+      <template v-slot:prepend-action>
+        <v-layout>
+        <v-spacer></v-spacer>
+        <v-btn flat :to="`/leagues/${sport}`" hover> {{ sport }}</v-btn>
+        </v-layout>
+      </template>
         <template v-slot:no-data>
-            <v-btn large to="/leagues/import"> No Leagues Yet<br/> + </br>Import a league</v-btn>
+          <v-layout justify-center>
+          <v-flex xs12 sm6 md4 lg3 justify-center>
+            <v-card :to="`/leagues/import`" hover v-ripple>
+              <v-layout column>
+                  <div>You don't have any football leagues imported</div>
+                  <div> + </div>
+                  <div>Import A League</div>
+              </v-layout>
+            </v-card>
+            </v-flex>
+          </v-layout>
         </template>
         <template v-slot:item="props">
           <v-flex
@@ -19,7 +34,7 @@
             md4
             lg3
           >
-            <v-card :to="`/leagues/${props.item.id}`" hover>
+            <v-card :to="`/leagues/${sport}/${props.item.id}`" hover v-ripple>
               <v-card-title><h4>{{ props.item.name }}</h4>
                 <v-spacer></v-spacer>
                 {{ props.item.type.toUpperCase()}}
@@ -33,10 +48,6 @@
                 <v-list-tile>
                   <v-list-tile-content>Team Id:</v-list-tile-content>
                   <v-list-tile-content class="align-end">{{ props.item.teamId }}</v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile>
-                  <v-list-tile-content>Teams:</v-list-tile-content>
-                  <v-list-tile-content class="align-end">{{ props.item.teams.length }}</v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
                   <v-list-tile-content>Teams:</v-list-tile-content>
@@ -65,12 +76,11 @@
 import { mapGetters } from 'vuex';
 
 export default { 
-    props: ['sport'],
+    props: ['sport', 'displayOptions'],
     data() {
       return {
         loaded: false,
         error: null,
-        rowsPerPageItems: [4, 8, 12],
         pagination: {
           rowsPerPage: 4
       },
@@ -93,3 +103,8 @@ export default {
     },
   }
 </script>
+<style>
+  .leagues-list .v-data-iterator__actions {
+    justify-content:center;
+  }
+</style>

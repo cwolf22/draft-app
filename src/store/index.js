@@ -63,7 +63,7 @@ export default new Vuex.Store({
           .then((resp) => {
             commit('SET_USER', payload.email);
             commit('SET_TOKEN', resp.data.token);
-            resolve(dispatch('RETRIEVE_LEAGUES', { refresh:true }))
+            resolve(dispatch('RETRIEVE_LEAGUES', { refresh: true }));
           })
           .catch((err) => {
             commit('SET_USER', '');
@@ -91,21 +91,20 @@ export default new Vuex.Store({
       return promise;
     },
     RETRIEVE_LEAGUES: ({ commit, state }, payload) => {
-      console.log(`retrieve leagues for ${state.user}`)
+      console.log(`retrieve leagues for ${state.user}`);
       const promise = new Promise((resolve, reject) => {
         if (payload && !payload.refresh && state.leagues.length > 0) {
-          console.log('resolving hurr');
           resolve(state.leagues);
           return;
         }
         drafterAPI.getLeagues(state.user, state.token)
-          .then(data => {
+          .then((data) => {
             commit('STORE_LEAGUES', data);
             resolve(data);
-          }).catch(err => reject(err) );
+          }).catch(err => reject(err));
       });
       return promise;
-    }
+    },
   },
   plugins: [userStorage.plugin],
 });

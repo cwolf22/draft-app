@@ -1,5 +1,5 @@
 <template>
-<v-container>
+<v-container fluid>
   <v-layout text-xs-center wrap>
     <v-flex
       sm4
