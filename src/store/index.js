@@ -19,11 +19,13 @@ export default new Vuex.Store({
     user: '',
     token: '',
     importing: false,
-    leagues:[]
+    leagues:[],
+    leagueLoaded: false
   },
   getters: {
     AUTHENTICATED: state => state.token.length > 0,
     LEAGUES: state => state.leagues,
+    LEAGUES_LOADED: state => state.leagueLoaded
   },
   mutations: {
     SET_USER: (state, payload) => {
@@ -34,6 +36,10 @@ export default new Vuex.Store({
     },
     STORE_LEAGUES: (state, payload) => {
       state.leagues = payload;
+      state.leagueLoaded = true;
+    },
+    SET_LEAGUE_LOADED: (state, payload) => {
+      state.leagueLoaded = payload;
     }
   },
   actions: {
@@ -91,7 +97,7 @@ export default new Vuex.Store({
       return promise;
     },
     RETRIEVE_LEAGUES: ({ commit, state }, payload) => {
-      console.log(`retrieve leagues for ${state.user}`);
+      console.log(`Retrieve leagues for ${state.user}`);
       const promise = new Promise((resolve, reject) => {
         if (payload && !payload.refresh && state.leagues.length > 0) {
           resolve(state.leagues);

@@ -79,7 +79,7 @@
     </v-navigation-drawer>
     <v-toolbar app fixed clipped-left  color="primary" dark>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Baiting Sheep - Fantasy App</v-toolbar-title>
+      <v-toolbar-title>Fantasy App</v-toolbar-title>
       <v-spacer />
       <v-btn flat v-if="!AUTHENTICATED" to="/login" active-class="">Login / Register</v-btn>
       <v-btn flat v-else @click="logout">Logout</v-btn>

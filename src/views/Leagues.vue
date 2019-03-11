@@ -5,7 +5,10 @@
         <v-icon>forward</v-icon>
       </template>
     </v-breadcrumbs>
-    <leagues-list v-for="item in sportsList" :key="item.sport" :sport="item.sport" :displayOptions="item.options"/>
+    <v-container v-if="!LEAGUES_LOADED">
+      <v-progress-linear :indeterminate="true" />
+    </v-container>
+    <leagues-list v-else v-for="item in sportsList" :key="item.sport" :sport="item.sport" :displayOptions="item.options"/>
     </v-container>
 </template>
 
@@ -29,6 +32,7 @@ import LeaguesList from '@/components/LeaguesList';
       }
     },
     computed: {
+      ...mapGetters(['LEAGUES_LOADED']),
       sportsList() {
         if (!this.$route.params.sport) return this.sports
         return [{
