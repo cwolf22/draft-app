@@ -1,5 +1,7 @@
 <template>
-  <h1>homepage and widgets</h1>
+  <v-container fluid>
+    <h2>homepage and widgets</h2>
+  </v-container>
 </template>
 
 <script>

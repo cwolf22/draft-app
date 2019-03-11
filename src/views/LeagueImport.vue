@@ -9,7 +9,7 @@
           <v-toolbar-title>Import League</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click="submit" :disabled="errors.any() || !completed">Save</v-btn>
+            <v-btn dark flat @click="submit" :disabled="errors.any() || !completed">Import</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <v-container grid-list-md>
@@ -49,6 +49,8 @@
                   :error-messages="errors.collect('username')"
                   label="Username"
                   data-vv-name="username"
+                  :hint=" form.site ? `Enter your ${form.site} Username` : ''"
+                  persistent-hint
                   required
                   ></v-text-field>
                 <v-text-field 
@@ -59,8 +61,14 @@
                   :error-messages="errors.collect('password')"
                   data-vv-name="password"
                   type="password"
+                  :hint=" form.site ? `Enter your ${form.site} Password` : ''"
+                  persistent-hint
                   required></v-text-field>
-                <v-btn style="display:none;" @click.prevent="submit" type="submit" :disabled="errors.any() || !completed"></v-btn>
+                <v-layout>
+                  <v-spacer></v-spacer>
+                  <v-btn @click.prevent="resetForm" color="error">Clear</v-btn>
+                  <v-btn @click.prevent="submit" type="submit" :disabled="errors.any() || !completed">Import</v-btn>
+                </v-layout>
           </form>
         </v-flex>
       </v-layout>
@@ -132,7 +140,7 @@
             this.form.password = '',
             this.form.sport = '',
             this.form.site = '',
-            setTimeout(() => this.errors.clear(), 500);
+            setTimeout(() => this.errors.clear(), 50);
         },
         close() { 
             this.resetForm();

@@ -18,6 +18,10 @@
       <v-tab-item>
         <v-container>Action Items (upcoming draft, off season stuff)</v-container>
       </v-tab-item>
+      <v-tab ripple>Player Rankings</v-tab>
+      <v-tab-item>
+        <v-container>Player Rankings (perhaps will only display for teams who havent drafted yet)</v-container>
+      </v-tab-item>
       <v-tab ripple :disabled="!isAdmin">Admin</v-tab>
       <v-tab-item>
         <v-container v-if="isAdmin">Admin Stuff (set up draft, create housekeeping items, etc.)</v-container>

@@ -17,12 +17,17 @@
         <template v-slot:no-data>
           <v-layout justify-center>
           <v-flex xs12 sm6 md4 lg3 justify-center>
-            <v-card :to="`/leagues/import`" hover v-ripple>
-              <v-layout column>
-                  <div>You don't have any football leagues imported</div>
-                  <div> + </div>
-                  <div>Import A League</div>
-              </v-layout>
+            <v-card>
+              <v-toolbar dark color="primary">
+                <v-toolbar-title>Uh Oh...</v-toolbar-title>
+              </v-toolbar>
+              <v-card-text>
+                You currently have no leagues.  Would you like to import?
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn to="/leagues/import">Import</v-btn>
+              </v-card-actions>
             </v-card>
             </v-flex>
           </v-layout>

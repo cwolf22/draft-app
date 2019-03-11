@@ -21,9 +21,10 @@ import LeaguesList from '@/components/LeaguesList';
         sports: [{
           sport: 'baseball',
           options: [4]
-        }, {
+       /* }, {
           sport: 'football',
           options: [4]
+          */
         }]
       }
     },

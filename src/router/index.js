@@ -41,6 +41,9 @@ router.beforeEach((to, from, next) => {
     next(to.meta.authenticatedRedirect);
     return;
   }
+  if (to.meta.showImport) {
+    console.log(from);
+  }
   next();
 });
 
