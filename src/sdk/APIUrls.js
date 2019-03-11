@@ -7,6 +7,7 @@ const API = {
   LOGIN_USER: () => `${API_BASE}/login`,
   LOGOUT_USER: () => `${API_BASE}/logout`,
 
+  RETRIEVE_LEAGUES: (user) => `${API_BASE}/leagues/${user}`,
   IMPORT_LEAGUES: (user, sport) => `${API_BASE}/leagues/${user}/${sport}`,
 };
 

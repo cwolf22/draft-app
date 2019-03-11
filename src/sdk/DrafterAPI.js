@@ -31,7 +31,6 @@ const drafterAPI = () => {
     }),
     importLeagues: (email, token, payload) => new Promise((resolve, reject) => {
       console.log('[api] - import leagues');
-      console.log(payload)
       HTTPService.action(POST, API.IMPORT_LEAGUES(email, payload.sport), { 
           data: payload, 
           headers :{ authorization: `Bearer ${token}` } })
@@ -39,6 +38,13 @@ const drafterAPI = () => {
         .then(data => resolve(data))
         .catch(err => reject(err));
     }),
+    getLeagues: (email, token) => new Promise((resolve, reject) => {
+      console.log('[api] - retrieve leagues');
+      HTTPService.action(GET, API.RETRIEVE_LEAGUES(email), { headers :{ authorization: `Bearer ${token}` } })
+        .then(response => response.data)
+        .then(data => resolve(data))
+        .catch(err => reject(err));
+    })
   };
   return api;
 };

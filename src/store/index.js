@@ -18,10 +18,12 @@ export default new Vuex.Store({
   state: {
     user: '',
     token: '',
-    importing: false
+    importing: false,
+    leagues:[]
   },
   getters: {
     AUTHENTICATED: state => state.token.length > 0,
+    LEAGUES: state => state.leagues,
   },
   mutations: {
     SET_USER: (state, payload) => {
@@ -30,6 +32,9 @@ export default new Vuex.Store({
     SET_TOKEN: (state, payload) => {
       state.token = payload;
     },
+    STORE_LEAGUES: (state, payload) => {
+      state.leagues = payload;
+    }
   },
   actions: {
     REGISTER: ({ commit }, payload) => {
@@ -51,14 +56,14 @@ export default new Vuex.Store({
       });
       return promise;
     },
-    LOGIN: ({ commit }, payload) => {
+    LOGIN: ({ commit, dispatch }, payload) => {
       const promise = new Promise((resolve, reject) => {
         drafterAPI
           .login(payload.email, payload.password)
           .then((resp) => {
             commit('SET_USER', payload.email);
             commit('SET_TOKEN', resp.data.token);
-            resolve(resp);
+            resolve(dispatch('RETRIEVE_LEAGUES', { refresh:true }))
           })
           .catch((err) => {
             commit('SET_USER', '');
@@ -75,8 +80,7 @@ export default new Vuex.Store({
     },
     IMPORT_LEAGUES: ({ commit, state }, payload) => {
       const promise = new Promise((resolve, reject) => {
-        drafterAPI
-          .importLeagues(state.user, state.token, payload)
+        drafterAPI.importLeagues(state.user, state.token, payload)
           .then((resp) => {
             resolve(resp);
           })
@@ -86,6 +90,22 @@ export default new Vuex.Store({
       });
       return promise;
     },
+    RETRIEVE_LEAGUES: ({ commit, state }, payload) => {
+      console.log(`retrieve leagues for ${state.user}`)
+      const promise = new Promise((resolve, reject) => {
+        if (payload && !payload.refresh && state.leagues.length > 0) {
+          console.log('resolving hurr');
+          resolve(state.leagues);
+          return;
+        }
+        drafterAPI.getLeagues(state.user, state.token)
+          .then(data => {
+            commit('STORE_LEAGUES', data);
+            resolve(data);
+          }).catch(err => reject(err) );
+      });
+      return promise;
+    }
   },
   plugins: [userStorage.plugin],
 });
