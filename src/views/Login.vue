@@ -20,11 +20,11 @@
                   data-vv-name="email"
                   required
                   ></v-text-field>
-                <v-text-field 
-                  prepend-icon="lock" 
-                  v-model="password" 
+                <v-text-field
+                  prepend-icon="lock"
+                  v-model="password"
                   v-validate="'required'"
-                  label="Password" 
+                  label="Password"
                   :error-messages="errors.collect('password')"
                   data-vv-name="password"
                   type="password"
@@ -62,31 +62,31 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        email: '',
-        password: '',
-        working: false
-      }
+export default {
+  data() {
+    return {
+      email: '',
+      password: '',
+      working: false,
+    };
+  },
+  computed: {
+    completed() {
+      return this.email && this.password;
     },
-    computed: {
-      completed() {
-        return this.email && this.password;
-      },
+  },
+  methods: {
+    submit() {
+      this.working = true;
+      this.$store.dispatch('LOGIN', { email: this.email, password: this.password })
+        .then(() => {
+          this.working = false;
+          this.$router.push('/leagues');
+        }).catch((err) => {
+          this.working = false;
+          console.log(err);
+        });
     },
-    methods: {
-      submit() {
-        this.working = true;
-        this.$store.dispatch('LOGIN', { email: this.email, password: this.password })
-         .then(() => {
-           this.working = false;
-           this.$router.push('/leagues');
-         }).catch(err => {
-            this.working = false;
-            console.log(err)
-         });
-      }
-    }
-  }
+  },
+};
 </script>

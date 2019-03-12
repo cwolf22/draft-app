@@ -19,13 +19,13 @@ export default new Vuex.Store({
     user: '',
     token: '',
     importing: false,
-    leagues:[],
-    leagueLoaded: false
+    leagues: [],
+    leagueLoaded: false,
   },
   getters: {
     AUTHENTICATED: state => state.token.length > 0,
     LEAGUES: state => state.leagues,
-    LEAGUES_LOADED: state => state.leagueLoaded
+    LEAGUES_LOADED: state => state.leagueLoaded,
   },
   mutations: {
     SET_USER: (state, payload) => {
@@ -40,7 +40,7 @@ export default new Vuex.Store({
     },
     SET_LEAGUE_LOADED: (state, payload) => {
       state.leagueLoaded = payload;
-    }
+    },
   },
   actions: {
     REGISTER: ({ commit }, payload) => {

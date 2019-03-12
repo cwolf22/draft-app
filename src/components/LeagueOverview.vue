@@ -46,30 +46,30 @@
 import { mapGetters } from 'vuex';
 
 export default {
-    props: ['league'],
-    computed: {
-        leagueCreators() {
-            const creators = [];
-            if (this.league) {
-                this.league.teams.forEach(team => {
-                    team.owners.forEach(owner => {
-                        if (owner.isLeagueCreator) creators.push(owner)
-                    })
-                });
-                return creators;
-            }
-        },
-        leagueManagers() {
-            const managers = [];
-            if (this.league) {
-                this.league.teams.forEach(team => {
-                    team.owners.forEach(owner => {
-                        if (owner.isLeagueManager) managers.push(owner)
-                    })
-                });
-            }
-            return managers
-        }
-    }
-}
+  props: ['league'],
+  computed: {
+    leagueCreators() {
+      const creators = [];
+      if (this.league) {
+        this.league.teams.forEach((team) => {
+          team.owners.forEach((owner) => {
+            if (owner.isLeagueCreator) creators.push(owner);
+          });
+        });
+        return creators;
+      }
+    },
+    leagueManagers() {
+      const managers = [];
+      if (this.league) {
+        this.league.teams.forEach((team) => {
+          team.owners.forEach((owner) => {
+            if (owner.isLeagueManager) managers.push(owner);
+          });
+        });
+      }
+      return managers;
+    },
+  },
+};
 </script>

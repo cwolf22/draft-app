@@ -80,33 +80,33 @@
 <script>
 import { mapGetters } from 'vuex';
 
-export default { 
-    props: ['sport', 'displayOptions'],
-    data() {
-      return {
-        loaded: false,
-        error: null,
-        pagination: {
-          rowsPerPage: 4
+export default {
+  props: ['sport', 'displayOptions'],
+  data() {
+    return {
+      loaded: false,
+      error: null,
+      pagination: {
+        rowsPerPage: 4,
       },
-      }
+    };
+  },
+  computed: {
+    ...mapGetters(['LEAGUES']),
+    leagues() {
+      return this.LEAGUES.filter(league => league.sport == this.sport);
     },
-    computed: {
-      ...mapGetters(['LEAGUES']),
-      leagues() {
-        return this.LEAGUES.filter(league => league.sport == this.sport)
-      }
-      
+
+  },
+  methods: {
+    getTeam(league) {
+      return league.teams.find(team => team.id == league.teamId);
     },
-    methods: {
-      getTeam(league) {
-        return league.teams.find(team => team.id == league.teamId)
-      },
-      getTeamName(team) {
-        return `${team.location} ${team.nickname}`
-      }
+    getTeamName(team) {
+      return `${team.location} ${team.nickname}`;
     },
-  }
+  },
+};
 </script>
 <style>
   .leagues-list .v-data-iterator__actions {

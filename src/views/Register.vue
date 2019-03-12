@@ -20,22 +20,22 @@
                   data-vv-name="email"
                   required
                   ></v-text-field>
-                <v-text-field 
-                  prepend-icon="lock" 
-                  v-model="password" 
+                <v-text-field
+                  prepend-icon="lock"
+                  v-model="password"
                   v-validate="'required|min:5'"
-                  label="Password" 
+                  label="Password"
                   :error-messages="errors.collect('password')"
                   data-vv-name="password"
                   type="password"
                   ref="password"
                   required></v-text-field>
-                <v-text-field 
-                  :prepend-icon="confirmIcon" 
-                  v-model="passwordConfirm" 
+                <v-text-field
+                  :prepend-icon="confirmIcon"
+                  v-model="passwordConfirm"
                   v-validate="'required|confirmed:password'"
                   :error-messages="errors.collect('passwordConfirm')"
-                  label="Confirm Password" 
+                  label="Confirm Password"
                   data-vv-name="passwordConfirm"
                   type="password"></v-text-field>
               </v-card-text>
@@ -71,35 +71,35 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        email: '',
-        password: '',
-        passwordConfirm: '',
-        working: false,
-      }
+export default {
+  data() {
+    return {
+      email: '',
+      password: '',
+      passwordConfirm: '',
+      working: false,
+    };
+  },
+  computed: {
+    completed() {
+      return this.email && this.password && this.passwordConfirm;
     },
-    computed: {
-      completed() {
-        return this.email && this.password && this.passwordConfirm;
-      },
-      confirmIcon() {
-        return this.passwordConfirm.length > 0 && this.password === this.passwordConfirm ? 'lock' : 'lock_open';
-      },
+    confirmIcon() {
+      return this.passwordConfirm.length > 0 && this.password === this.passwordConfirm ? 'lock' : 'lock_open';
     },
-    methods: {
-      submit() {
-        this.working = true;
-        this.$store.dispatch('REGISTER', { email:this.email, password:this.password })
-         .then(() => {
-           this.working = false;
-           this.$router.push('/leagues');
-         }).catch(err => {
-            this.working = false;
-            console.log(err)
-         });
-      }
-    }
+  },
+  methods: {
+    submit() {
+      this.working = true;
+      this.$store.dispatch('REGISTER', { email: this.email, password: this.password })
+        .then(() => {
+          this.working = false;
+          this.$router.push('/leagues');
+        }).catch((err) => {
+          this.working = false;
+          console.log(err);
+        });
+    },
+  },
 };
 </script>

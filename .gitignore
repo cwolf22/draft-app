@@ -96,3 +96,6 @@ typings/
 
 # vscode History
 .history/
+
+#firebase deploy
+.firebase/

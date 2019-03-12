@@ -90,92 +90,92 @@
           </v-calendar>
         </v-sheet>
      </v-flex>
-     
+
   </v-layout>
 </v-container>
 </template>
 
 <script>
-const monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
+const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
 ];
 
-  export default {
-    data: () => ({
-      date: new Date().toISOString(),
-      type: 'month',
-      events: [
-        {
-          title: 'Vacation',
-          details: 'Going to the beach!',
-          date: '2018-12-30',
-          open: false
-        },
-        {
-          title: 'Vacation',
-          details: 'Going to the beach!',
-          date: '2018-12-31',
-          open: false
-        },
-        {
-          title: 'Vacation',
-          details: 'Going to the beach!',
-          date: '2019-01-01',
-          open: false
-        },
-        {
-          title: 'Meeting',
-          details: 'Spending time on how we do not have enough time',
-          date: '2019-01-07',
-          open: false
-        },
-        {
-          title: '30th Birthday',
-          details: 'Celebrate responsibly',
-          date: '2019-01-03',
-          open: false
-        },
-        {
-          title: 'New Year',
-          details: 'Eat chocolate until you pass out',
-          date: '2019-01-01',
-          open: false
-        },
-        {
-          title: 'Conference',
-          details: 'Mute myself the whole time and wonder why I am on this call',
-          date: '2019-01-21',
-          open: false
-        },
-        {
-          title: 'Hackathon',
-          details: 'Code like there is no tommorrow',
-          date: '2019-02-05',
-          open: false
-        }
-      ],
-    }),
-    computed: {
-      // convert the list of events into a map of lists keyed by date
-      eventsMap () {
-        const map = {}
-        this.events.forEach(e => (map[e.date] = map[e.date] || []).push(e))
-        return map
+export default {
+  data: () => ({
+    date: new Date().toISOString(),
+    type: 'month',
+    events: [
+      {
+        title: 'Vacation',
+        details: 'Going to the beach!',
+        date: '2018-12-30',
+        open: false,
       },
-      selectedDate() {
-        const datar = this.date.split('-');
-        return {
-          month: monthNames[parseInt(datar[1]) -1 ],
-          year: datar[0]
-        }
-      }
+      {
+        title: 'Vacation',
+        details: 'Going to the beach!',
+        date: '2018-12-31',
+        open: false,
+      },
+      {
+        title: 'Vacation',
+        details: 'Going to the beach!',
+        date: '2019-01-01',
+        open: false,
+      },
+      {
+        title: 'Meeting',
+        details: 'Spending time on how we do not have enough time',
+        date: '2019-01-07',
+        open: false,
+      },
+      {
+        title: '30th Birthday',
+        details: 'Celebrate responsibly',
+        date: '2019-01-03',
+        open: false,
+      },
+      {
+        title: 'New Year',
+        details: 'Eat chocolate until you pass out',
+        date: '2019-01-01',
+        open: false,
+      },
+      {
+        title: 'Conference',
+        details: 'Mute myself the whole time and wonder why I am on this call',
+        date: '2019-01-21',
+        open: false,
+      },
+      {
+        title: 'Hackathon',
+        details: 'Code like there is no tommorrow',
+        date: '2019-02-05',
+        open: false,
+      },
+    ],
+  }),
+  computed: {
+    // convert the list of events into a map of lists keyed by date
+    eventsMap() {
+      const map = {};
+      this.events.forEach(e => (map[e.date] = map[e.date] || []).push(e));
+      return map;
     },
-    methods: {
-      open (event) {
-        alert(event.title)
-      }
-    }
-  }
+    selectedDate() {
+      const datar = this.date.split('-');
+      return {
+        month: monthNames[parseInt(datar[1]) - 1],
+        year: datar[0],
+      };
+    },
+  },
+  methods: {
+    open(event) {
+      alert(event.title);
+    },
+  },
+};
 </script>
 
 <style lang="stylus" scoped>

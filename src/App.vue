@@ -13,13 +13,21 @@
 
 <script>
 import Navigation from '@/components/Navigation';
-import LeagueImport from '@/views/LeagueImport'
+import LeagueImport from '@/views/LeagueImport';
 
 export default {
   name: 'App',
   components: {
     Navigation,
-    LeagueImport
+    LeagueImport,
   },
 };
 </script>
+
+<style>
+.align-end {
+    -webkit-box-align: end;
+    -ms-flex-align: end;
+    align-items: flex-end;
+}
+</style>

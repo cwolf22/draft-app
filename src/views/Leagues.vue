@@ -15,50 +15,51 @@
 <script>
 import { mapGetters } from 'vuex';
 import LeaguesList from '@/components/LeaguesList';
-  export default {
-    components: {
-      LeaguesList,
-    },
-    data() {
-      return {
-        sports: [{
-          sport: 'baseball',
-          options: [4]
-       /* }, {
+
+export default {
+  components: {
+    LeaguesList,
+  },
+  data() {
+    return {
+      sports: [{
+        sport: 'baseball',
+        options: [4],
+        /* }, {
           sport: 'football',
           options: [4]
           */
-        }]
-      }
+      }],
+    };
+  },
+  computed: {
+    ...mapGetters(['LEAGUES_LOADED']),
+    sportsList() {
+      if (!this.$route.params.sport) return this.sports;
+      return [{
+        sport: this.$route.params.sport,
+        options: [4, 8, 12],
+      }];
     },
-    computed: {
-      ...mapGetters(['LEAGUES_LOADED']),
-      sportsList() {
-        if (!this.$route.params.sport) return this.sports
-        return [{
-          sport: this.$route.params.sport,
-          options: [4,8,12]
-        }]
-      },
-      breadcrumb() {
-        const breadcrumb = [{
-          text: 'Leagues',
+    breadcrumb() {
+      const breadcrumb = [{
+        text: 'Leagues',
+        exact: true,
+        to: '/leagues',
+      }];
+      if (this.$route.params.sport) {
+        breadcrumb.push({
+          text: this.$route.params.sport.charAt(0).toUpperCase() + this.$route.params.sport.slice(1),
           exact: true,
-          to: '/leagues'
-        }];
-        if (this.$route.params.sport) {
-          breadcrumb.push({
-            text: this.$route.params.sport.charAt(0).toUpperCase() + this.$route.params.sport.slice(1),
-            exact:true,
-            to: `/leagues/${this.$route.params.sport}`
-          })
-        }
-        return breadcrumb;
-    }
+          to: `/leagues/${this.$route.params.sport}`,
+        });
+      }
+      return breadcrumb;
     },
-    created() {
-      this.$store.dispatch('RETRIEVE_LEAGUES', { refresh: false })
-        .catch(error => this.error = error)
-    },
-  }
+  },
+  created() {
+    this.$store.dispatch('RETRIEVE_LEAGUES', { refresh: false })
+      .catch(error => this.error = error);
+  },
+};
 </script>

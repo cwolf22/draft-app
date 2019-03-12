@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid> 
+  <v-container fluid>
       <v-breadcrumbs :items="breadcrumb">
       <template v-slot:divider>
         <v-icon>forward</v-icon>
@@ -27,69 +27,70 @@
         <v-container v-if="isAdmin">Admin Stuff (set up draft, create housekeeping items, etc.)</v-container>
       </v-tab-item>
     </v-tabs>
-  
+
   </v-container>
 </template>
 
 <script>
-import Rosters from '@/components/Rosters'
-import LeagueOverview from '@/components/LeagueOverview'
+import Rosters from '@/components/Rosters';
+import LeagueOverview from '@/components/LeagueOverview';
 import { mapGetters } from 'vuex';
-  export default {
-    components: {
-      Rosters,
-      LeagueOverview
+
+export default {
+  components: {
+    Rosters,
+    LeagueOverview,
+  },
+  data() {
+    return {
+      active: null,
+    };
+  },
+  computed: {
+    ...mapGetters(['LEAGUES']),
+    league() {
+      return this.LEAGUES.find(l => l.id == this.$route.params.id);
     },
-    data() {
-      return {
-        active: null,
-      }
+    sport() {
+      return this.$route.params.sport;
     },
-    computed: {
-      ...mapGetters(['LEAGUES']),
-      league() {
-        return this.LEAGUES.find(l => l.id == this.$route.params.id);
-      },
-      sport() {
-        return this.$route.params.sport;
-      },
-      breadcrumb() {
-        return [
+    breadcrumb() {
+      return [
         {
           text: 'Leagues',
           exact: true,
-          to: '/leagues'
+          to: '/leagues',
         },
         {
           text: this.sport.charAt(0).toUpperCase() + this.sport.slice(1),
           exact: true,
-          to: `/leagues/${this.sport}`
+          to: `/leagues/${this.sport}`,
         },
         {
           text: this.$route.params.id.toUpperCase(),
           exact: true,
-          to: `/leagues/${this.sport}/${this.$route.params.id}`
-        }
-      ]
-      },
-      isAdmin() {
-        if (!this.league) return false;
-        let owner = null;
-        this.league.teams.find(team => {
-          team.owners.find(mngr => {
-            if (mngr.id !== this.league.ownerId) return false;
-            owner = mngr;
-            return true;
-          });
-          return owner;
-        })
-        return owner.isLeagueManager;
-      }
+          to: `/leagues/${this.sport}/${this.$route.params.id}`,
+        },
+      ];
     },
-    created() {
-      this.$store.dispatch('RETRIEVE_LEAGUES', { refresh: false })
-        .then(response => this.loaded = true)
-        .catch(error => this.error = error)
+    isAdmin() {
+      if (!this.league) return false;
+      let owner = null;
+      this.league.teams.find((team) => {
+        team.owners.find((mngr) => {
+          if (mngr.id !== this.league.ownerId) return false;
+          owner = mngr;
+          return true;
+        });
+        return owner;
+      });
+      return owner.isLeagueManager;
     },
-  }
+  },
+  created() {
+    this.$store.dispatch('RETRIEVE_LEAGUES', { refresh: false })
+      .then(response => this.loaded = true)
+      .catch(error => this.error = error);
+  },
+};
 </script>

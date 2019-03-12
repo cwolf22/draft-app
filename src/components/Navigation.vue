@@ -40,7 +40,7 @@
                   <v-list-tile-title>Leagues</v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
-            </template>    
+            </template>
             <v-list-tile to="/leagues" exact v-ripple="{ center: true }">
               <v-list-tile-action>
                 <v-icon>view_array</v-icon>
@@ -89,25 +89,26 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import LeagueImport from '@/views/LeagueImport'
+import LeagueImport from '@/views/LeagueImport';
+
 export default {
-    components: {
-      LeagueImport,
-    },
-    data() {
-        return {
-          drawer: false,
-        }
-    },
-    computed: {
+  components: {
+    LeagueImport,
+  },
+  data() {
+    return {
+      drawer: false,
+    };
+  },
+  computed: {
     ...mapGetters(['AUTHENTICATED']),
   },
   methods: {
     logout() {
       this.$store.dispatch('LOGOUT')
         .then(() => this.$router.push('/'))
-        .catch(err => console.log(err))
-    }
+        .catch(err => console.log(err));
+    },
   },
-}
+};
 </script>

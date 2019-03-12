@@ -46,22 +46,22 @@
 
 <script>
 export default {
-    props: ['league', 'sport'], 
-    data() { 
-      return {
-        loaded: false,
-        pagination: {
-          rowsPerPage: 12
-        },
-      }
-    },
-    methods: {
-      getTeam(league) {
-        return league.teams.find(team => team.id == league.teamId)
+  props: ['league', 'sport'],
+  data() {
+    return {
+      loaded: false,
+      pagination: {
+        rowsPerPage: 12,
       },
-      getTeamName(team) {
-        return `${team.location} ${team.nickname}`
-      }
+    };
+  },
+  methods: {
+    getTeam(league) {
+      return league.teams.find(team => team.id == league.teamId);
     },
-  }
+    getTeamName(team) {
+      return `${team.location} ${team.nickname}`;
+    },
+  },
+};
 </script>

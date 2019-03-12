@@ -1,7 +1,7 @@
 <template>
   <section>
     <v-dialog v-model="show" fullscreen hide-overlay transition="dialog-bottom-transition">
-      <v-card>  
+      <v-card>
         <v-toolbar dark color="primary">
           <v-btn icon dark @click="close">
             <v-icon>close</v-icon>
@@ -53,11 +53,11 @@
                   persistent-hint
                   required
                   ></v-text-field>
-                <v-text-field 
-                  prepend-icon="lock" 
-                  v-model="form.password" 
+                <v-text-field
+                  prepend-icon="lock"
+                  v-model="form.password"
                   v-validate="'required'"
-                  label="Password" 
+                  label="Password"
                   :error-messages="errors.collect('password')"
                   data-vv-name="password"
                   type="password"
@@ -74,11 +74,11 @@
       </v-layout>
       <v-divider></v-divider>
       </v-container>
-      </v-card> 
+      </v-card>
     </v-dialog>
     <v-dialog
       v-model="worker.show"
-     
+
       persistent
       width="300">
       <v-card
@@ -112,69 +112,70 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
+export default {
+  data() {
+    return {
+      show: false,
+      working: true,
+      form: {
+        user: '',
+        password: '',
+        sport: '',
+        site: '',
+      },
+      worker: {
         show: false,
-        working: true,
-        form: {
-            user: '',
-            password: '',
-            sport: '',
-            site: ''
-        },
-        worker: {
-          show: false,
-          color: "primary",
-        }
-      }
+        color: 'primary',
+      },
+    };
+  },
+  computed: {
+    completed() {
+      return this.form.user && this.form.password && this.form.sport && this.form.site;
     },
-    computed: {
-        completed() {
-            return this.form.user && this.form.password && this.form.sport && this.form.site;
-        }
+  },
+  methods: {
+    resetForm() {
+      this.form.user = '',
+      this.form.password = '',
+      this.form.sport = '',
+      this.form.site = '',
+      setTimeout(() => this.errors.clear(), 50);
     },
-    methods: {
-        resetForm() {
-            this.form.user = '',
-            this.form.password = '',
-            this.form.sport = '',
-            this.form.site = '',
-            setTimeout(() => this.errors.clear(), 50);
-        },
-        close() { 
+    close() {
+      this.resetForm();
+      this.$router.back();
+    },
+    submit() {
+      this.worker.show = true;
+      this.$store.dispatch('IMPORT_LEAGUES', {
+        username: this.form.user,
+        password: this.form.password,
+        sport: this.form.sport,
+        type: this.form.site,
+      })
+        .then((data) => {
+          this.worker.color = 'success';
+          setTimeout(() => {
+            this.worker.show = false;
+            this.worker.color = 'primary';
             this.resetForm();
             this.$router.back();
-        },
-        submit() {
-          this.worker.show = true;
-          this.$store.dispatch('IMPORT_LEAGUES', { 
-              username: this.form.user, 
-              password: this.form.password, 
-              sport: this.form.sport, 
-              type: this.form.site })
-            .then((data) => {
-              this.worker.color="success";
-              setTimeout(() => {
-                this.worker.show = false;
-                this.worker.color = 'primary';
-                this.resetForm();
-                this.$router.back();
-              }, 1500)
-            }).catch(err => {
-              this.worker.color="error";
-              setTimeout(() => {
-                this.worker.show = false;
-                this.worker.color = 'primary';
-              }, 1500)
-          });
-        }
+          }, 1500);
+        }).catch((err) => {
+          this.worker.color = 'error';
+          setTimeout(() => {
+            this.worker.show = false;
+            this.worker.color = 'primary';
+          }, 1500);
+        });
     },
-    watch: {
-    '$route.meta' ({showImport}) {
-      if (showImport) this.show = true
-      else this.show = false
-    }
-  }
-  }
+  },
+  watch: {
+    '$route.meta': function ({ showImport }) {
+      if (showImport) this.show = true;
+      else this.show = false;
+    },
+  },
+};
 </script>
