@@ -82,19 +82,42 @@
       <v-toolbar-title>Fantasy App</v-toolbar-title>
       <v-spacer />
       <v-btn flat v-if="!AUTHENTICATED" to="/login" active-class="">Login / Register</v-btn>
-      <v-btn flat v-else @click="logout">Logout</v-btn>
+      <template v-else>
+        <v-btn color="white"
+            flat 
+            icon>
+            <v-icon>email</v-icon>
+        </v-btn>
+        <v-menu 
+        offset-y
+        bottom>
+        <template v-slot:activator="{ on }">
+          <v-btn v-ripple
+            color="white"
+            flat 
+            icon
+            v-on="on"
+          >
+            <v-icon>account_circle</v-icon>
+          </v-btn>
+        </template>
+        <v-list dense>
+          <v-list-tile to="/account" v-ripple>
+            <v-list-tile-title class="body-2">Account</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click="logout" v-ripple>
+            <v-list-tile-title class="body-2">Logout</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+      </template>
     </v-toolbar>
   </section>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import LeagueImport from '@/views/LeagueImport';
-
 export default {
-  components: {
-    LeagueImport,
-  },
   data() {
     return {
       drawer: false,

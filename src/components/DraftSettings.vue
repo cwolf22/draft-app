@@ -1,5 +1,6 @@
 <template>
   <section>
+      <!-- http://fantasy.espn.com/apis/v3/games/flb/seasons/2018/segments/0/leagues/49976?view=mLiveScoring&view=mMatchupScore&view=mRoster&view=mSettings&view=mStandings&view=mStatus&view=mTeam&view=modular&view=mNav -->
     <v-dialog v-model="show" fullscreen hide-overlay transition="dialog-bottom-transition">
       <v-card>
         <v-toolbar dark color="primary">

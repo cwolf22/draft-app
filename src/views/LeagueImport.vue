@@ -159,8 +159,8 @@ export default {
           setTimeout(() => {
             this.worker.show = false;
             this.worker.color = 'primary';
+            this.$router.push(`/leagues/${this.form.sport.toLowerCase()}`);
             this.resetForm();
-            this.$router.back();
           }, 1500);
         }).catch((err) => {
           this.worker.color = 'error';

@@ -35,6 +35,8 @@ export default new Vuex.Store({
       state.token = payload;
     },
     STORE_LEAGUES: (state, payload) => {
+      console.log('store leagues')
+      console.log(payload)
       state.leagues = payload;
       state.leagueLoaded = true;
     },
@@ -50,8 +52,7 @@ export default new Vuex.Store({
           .then((resp) => {
             commit('SET_USER', payload.email);
             commit('SET_TOKEN', resp.data.token);
-            console.log(resp);
-            resolve(resp);
+            resolve(resp)
           })
           .catch((err) => {
             commit('SET_USER', '');
@@ -83,12 +84,15 @@ export default new Vuex.Store({
       //drafterAPI.logout(state.email, state.token);
       commit('SET_USER', '');
       commit('SET_TOKEN', '');
+      commit('STORE_LEAGUES', []);
+      commit('SET_LEAGUE_LOADED', false);
     },
     IMPORT_LEAGUES: ({ commit, state }, payload) => {
       const promise = new Promise((resolve, reject) => {
         drafterAPI.importLeagues(state.user, state.token, payload)
-          .then((resp) => {
-            resolve(resp);
+          .then((data) => {
+            commit('STORE_LEAGUES', data);
+            resolve(data);
           })
           .catch((err) => {
             reject(err);
