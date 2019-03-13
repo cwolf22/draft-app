@@ -105,9 +105,8 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.dispatch('LOGOUT')
-        .then(() => this.$router.push('/'))
-        .catch(err => console.log(err));
+      this.$store.dispatch('LOGOUT');
+      this.$router.push('/login');
     },
   },
 };

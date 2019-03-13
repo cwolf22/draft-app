@@ -80,7 +80,7 @@ export default new Vuex.Store({
       return promise;
     },
     LOGOUT: ({ commit, state }) => {
-      drafterAPI.logout(state.email, state.token);
+      //drafterAPI.logout(state.email, state.token);
       commit('SET_USER', '');
       commit('SET_TOKEN', '');
     },

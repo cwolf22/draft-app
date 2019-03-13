@@ -24,22 +24,23 @@
       </v-tab-item>
       <v-tab ripple :disabled="!isAdmin">Admin</v-tab>
       <v-tab-item>
-        <v-container v-if="isAdmin">Admin Stuff (set up draft, create housekeeping items, etc.)</v-container>
+        <admin-tools v-if="isAdmin" />
       </v-tab-item>
     </v-tabs>
-
   </v-container>
 </template>
 
 <script>
 import Rosters from '@/components/Rosters';
 import LeagueOverview from '@/components/LeagueOverview';
+import AdminTools from '@/components/AdminTools'
 import { mapGetters } from 'vuex';
 
 export default {
   components: {
     Rosters,
     LeagueOverview,
+    AdminTools
   },
   data() {
     return {
