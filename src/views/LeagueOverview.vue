@@ -46,8 +46,14 @@
 import { mapGetters } from 'vuex';
 
 export default {
-  props: ['league'],
   computed: {
+    ...mapGetters(['LEAGUES']),
+    league() {
+      return this.LEAGUES.find(l => l.id == this.$route.params.id);
+    },
+    sport() {
+      return this.$route.params.sport;
+    },
     leagueCreators() {
       const creators = [];
       if (this.league) {

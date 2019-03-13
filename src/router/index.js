@@ -25,7 +25,13 @@ const router = new Router({
     route('/leagues', 'Leagues', 'Leagues', { requiresAuth: true }),
     route('/leagues/import', 'LeagueImport', 'Leagues', { requiresAuth: true, showImport: true }),
     route('/leagues/:sport', 'LeaguesBySport', 'Leagues', { requiresAuth: true }),
-    route('/leagues/:sport/:id', 'League', 'League', { requiresAuth: true }),
+    route('/leagues/:sport/:id', 'League', 'League', { requiresAuth: true }, [
+      route('admin', 'Admin', 'AdminTools', { requiresAuth: true }),
+      route('rosters', 'Rosters', 'Rosters', { requiresAuth: true }),
+      route('', 'Overview', 'LeagueOverview', { requiresAuth: true }),
+      route('rankings', 'Rankings', 'PlaceHolder', { requiresAuth: true }),
+      route('actions', 'Actions', 'PlaceHolder', { requiresAuth: true }),
+    ]),
     route('/calendar', 'Calendar', 'Calendar', { requiresAuth: true }),
   ],
 });
@@ -44,6 +50,7 @@ router.beforeEach((to, from, next) => {
   if (to.meta.showImport) {
     console.log(from);
   }
+  console.log(to)
   next();
 });
 

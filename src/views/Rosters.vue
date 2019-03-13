@@ -46,7 +46,7 @@
 
 <script>
 export default {
-  props: ['league', 'sport'],
+  props:['league', 'sport'],
   data() {
     return {
       loaded: false,

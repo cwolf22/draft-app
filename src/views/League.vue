@@ -5,50 +5,33 @@
         <v-icon>forward</v-icon>
       </template>
     </v-breadcrumbs>
-    <v-tabs v-model="active">
-      <v-tab ripple>Overview</v-tab>
-      <v-tab-item>
-        <league-overview :league="league" :sport="sport"></league-overview>
-      </v-tab-item>
-      <v-tab ripple>Rosters</v-tab>
-      <v-tab-item>
-        <rosters :league="league" :sport="sport"/>
-      </v-tab-item>
-      <v-tab ripple>Action Items</v-tab>
-      <v-tab-item>
-        <v-container>Action Items (upcoming draft, off season stuff)</v-container>
-      </v-tab-item>
-      <v-tab ripple>Player Rankings</v-tab>
-      <v-tab-item>
-        <v-container>Player Rankings (perhaps will only display for teams who havent drafted yet)</v-container>
-      </v-tab-item>
-      <v-tab ripple :disabled="!isAdmin">Admin</v-tab>
-      <v-tab-item>
-        <admin-tools v-if="isAdmin" />
-      </v-tab-item>
+    <v-container v-if="!LEAGUES_LOADED">
+      <v-progress-linear :indeterminate="true" />
+    </v-container>
+    <v-tabs v-else v-model="active">
+      <v-tab ripple :to="{name: 'Overview'}">Overview</v-tab>
+      <v-tab ripple :to="{name: 'Rosters'}">Rosters</v-tab>
+      <v-tab ripple :to="{name: 'Actions'}">Action Items</v-tab>
+      <v-tab ripple :to="{name: 'Rankings'}">Player Rankings</v-tab>
+      <v-tab ripple :disabled="!isAdmin" :to="{name: 'Admin'}">Admin</v-tab>
     </v-tabs>
+    <transition name="slide-x-reverse-transition" mode="out-in">
+      <router-view v-if="league" :league="league" :sport="sport" :isAdmin="isAdmin" />
+    </transition>
   </v-container>
 </template>
 
 <script>
-import Rosters from '@/components/Rosters';
-import LeagueOverview from '@/components/LeagueOverview';
-import AdminTools from '@/components/AdminTools'
 import { mapGetters } from 'vuex';
 
 export default {
-  components: {
-    Rosters,
-    LeagueOverview,
-    AdminTools
-  },
   data() {
     return {
       active: null,
     };
   },
   computed: {
-    ...mapGetters(['LEAGUES']),
+    ...mapGetters(['LEAGUES', 'LEAGUES_LOADED']),
     league() {
       return this.LEAGUES.find(l => l.id == this.$route.params.id);
     },
@@ -69,7 +52,7 @@ export default {
         },
         {
           text: this.$route.params.id.toUpperCase(),
-          exact: true,
+          exact: false,
           to: `/leagues/${this.sport}/${this.$route.params.id}`,
         },
       ];

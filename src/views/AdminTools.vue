@@ -46,6 +46,7 @@
 
 <script>
 export default {
+  props: ['isAdmin', 'league'],
     data() {
         return {
             pagination: {
@@ -56,6 +57,11 @@ export default {
                 {title: 'Free Agency', text: 'Free Agency has not yet been set up'}
             ]
         }
+    },
+    mounted() {
+      if (!this.isAdmin) {
+        this.$router.push({name: 'Overview'})
+      }
     }
 }
 </script>
