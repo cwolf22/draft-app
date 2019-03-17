@@ -77,7 +77,7 @@
         </template>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar app fixed clipped-left  color="primary" dark>
+    <v-toolbar app fixed clipped-left color="primary" dark>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Fantasy App</v-toolbar-title>
       <v-spacer />

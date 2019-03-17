@@ -1,5 +1,3 @@
-
-
 <template>
   <span>
     <v-container fluid fill-height>
