@@ -25,10 +25,9 @@ export default {
       sports: [{
         sport: 'baseball',
         options: [4],
-        /* }, {
+        }, {
           sport: 'football',
           options: [4]
-          */
       }],
     };
   },

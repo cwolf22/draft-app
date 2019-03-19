@@ -19,7 +19,7 @@
               <v-layout row wrap>
               <v-flex xs12 sm6>
                 <v-select
-                  :items="['ESPN']"
+                  :items="['CBS', 'ESPN']"
                   label="Site"
                   prepend-icon="storage"
                   v-model="form.site"
@@ -31,7 +31,7 @@
               </v-flex>
               <v-flex xs12 sm6>
                 <v-select
-                  :items="['Baseball']"
+                  :items="['Baseball', 'Football']"
                   label="Sport"
                   prepend-icon="layers"
                   v-model="form.sport"

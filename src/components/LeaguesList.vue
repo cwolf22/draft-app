@@ -19,7 +19,7 @@
           <v-flex xs12 sm6 md4 lg3 justify-center>
             <v-card>
               <v-toolbar dark color="primary">
-                <v-toolbar-title>Uh Oh...</v-toolbar-title>
+                <v-toolbar-title style="text-transform: capitalize;">No {{ sport }} Leagues Found!</v-toolbar-title>
               </v-toolbar>
               <v-card-text>
                 You currently have no leagues.  Would you like to import?
@@ -48,7 +48,7 @@
               <v-list dense>
                 <v-list-tile>
                   <v-list-tile-content>Team:</v-list-tile-content>
-                  <v-list-tile-content class="align-end">{{ getTeamName(getTeam(props.item)) }}</v-list-tile-content>
+                  <v-list-tile-content class="align-end">{{ getTeam(props.item).name }}</v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
                   <v-list-tile-content>Team Id:</v-list-tile-content>
@@ -101,9 +101,6 @@ export default {
   methods: {
     getTeam(league) {
       return league.teams.find(team => team.id == league.teamId);
-    },
-    getTeamName(team) {
-      return `${team.location} ${team.nickname}`;
     },
   },
 };

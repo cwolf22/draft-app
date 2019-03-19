@@ -19,7 +19,7 @@
             lg3
           >
             <v-card class="p4">
-              <v-card-title><h4>{{ props.item.location }} {{ props.item.nickname }}</h4>
+              <v-card-title><h4>{{ props.item.name }}</h4>
                 <v-spacer></v-spacer>
                 <div style="text-transform: capitalize;">{{ props.item.owners[0].firstName }} {{ props.item.owners[0].lastName }}</div>
               </v-card-title>
@@ -58,9 +58,6 @@ export default {
   methods: {
     getTeam(league) {
       return league.teams.find(team => team.id == league.teamId);
-    },
-    getTeamName(team) {
-      return `${team.location} ${team.nickname}`;
     },
   },
 };

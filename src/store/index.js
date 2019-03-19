@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexPersistence from 'vuex-persist';
 import DrafterService from '@/sdk/DrafterService';
+import { constants } from 'zlib';
 
 const { drafterAPI } = new DrafterService();
 Vue.use(Vuex);
@@ -35,14 +36,19 @@ export default new Vuex.Store({
       state.token = payload;
     },
     STORE_LEAGUES: (state, payload) => {
-      console.log('store leagues')
-      console.log(payload)
       state.leagues = payload;
       state.leagueLoaded = true;
     },
     SET_LEAGUE_LOADED: (state, payload) => {
       state.leagueLoaded = payload;
     },
+    UPDATE_LEAGUES_STORE: (state, payload) => {
+      const filteredLeagues = state.leagues.filter(league => {
+        return !(payload.some(imported => imported.id == league.id && imported.type == league.type && imported.sport == league.sport))
+      });
+      payload.forEach(league => filteredLeagues.push(league));
+      state.leagues = filteredLeagues;
+    }
   },
   actions: {
     REGISTER: ({ commit }, payload) => {
@@ -91,7 +97,7 @@ export default new Vuex.Store({
       const promise = new Promise((resolve, reject) => {
         drafterAPI.importLeagues(state.user, state.token, payload)
           .then((data) => {
-            commit('STORE_LEAGUES', data);
+            commit('UPDATE_LEAGUES_STORE', data);
             resolve(data);
           })
           .catch((err) => {
