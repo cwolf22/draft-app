@@ -8,6 +8,20 @@
         row
         wrap
       >
+      <template v-slot:header>
+        <v-toolbar
+          class="mb-2"
+          color="primary"
+          dark
+          flat
+        >
+          <v-toolbar-title>
+            <v-btn :to="`/leagues/${sport}`" light flat large class="btn-header">{{ sport.toUpperCase() }}</v-btn>
+          </v-toolbar-title>
+          <v-spacer/>
+             <v-btn to="/leagues/import" light>Import</v-btn>
+        </v-toolbar>
+      </template>
       <template v-slot:prepend-action>
         <v-layout>
         <v-spacer></v-spacer>
@@ -105,6 +119,13 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+ .btn-header {
+    color:white;
+    font-size: 1em;
+ }
+</style>
 <style>
   .leagues-list .v-data-iterator__actions {
     justify-content:center;
