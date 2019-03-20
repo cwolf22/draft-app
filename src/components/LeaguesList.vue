@@ -30,17 +30,13 @@
       </template>
         <template v-slot:no-data>
           <v-layout justify-center>
-          <v-flex xs12 sm6 md4 lg3 justify-center>
+          <v-flex xs12 sm6 md4 lg3 justify-center class="pt-5">
             <v-card>
-              <v-toolbar dark color="primary">
-                <v-toolbar-title style="text-transform: capitalize;">No {{ sport }} Leagues Found!</v-toolbar-title>
-              </v-toolbar>
               <v-card-text>
                 You currently have no leagues.  Would you like to import?
               </v-card-text>
               <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn to="/leagues/import">Import</v-btn>
+                <v-btn to="/leagues/import" block color="primary">Import</v-btn>
               </v-card-actions>
             </v-card>
             </v-flex>

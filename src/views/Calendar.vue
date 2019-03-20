@@ -1,40 +1,19 @@
 <template>
 <v-container fluid>
   <v-layout text-xs-center wrap>
-    <v-flex
-      sm4
-      xs12
-      class="text-sm-left text-xs-center pb-2"
-    >
+    <v-flex sm4 class="text-sm-left text-xs-center pb-2">
       <v-btn @click="$refs.calendar.prev()">
-        <v-icon
-          dark
-          left
-        >
-          keyboard_arrow_left
-        </v-icon>
-        Prev
+        <v-icon dark left>keyboard_arrow_left</v-icon>
+        <span class="hidden-xs-only">Prev</span>
       </v-btn>
     </v-flex>
     <v-flex
-      sm4
-      xs12
-      class="text-xs-center"
-    ><h2 class="pt-2">{{ selectedDate.month }} {{ selectedDate.year }}</h2>
+      sm4 class="text-xs-center"><h2 class="pt-2">{{ selectedDate.month }} {{ selectedDate.year }}</h2>
     </v-flex>
-    <v-flex
-      sm4
-      xs12
-      class="text-sm-right text-xs-center"
-    >
+    <v-flex sm4 class="text-sm-right text-xs-center">
       <v-btn @click="$refs.calendar.next()">
-        Next
-        <v-icon
-          right
-          dark
-        >
-          keyboard_arrow_right
-        </v-icon>
+        <span class="hidden-xs-only">Next</span>
+        <v-icon dark left>keyboard_arrow_right</v-icon>
       </v-btn>
     </v-flex>
       <v-flex xs12>
