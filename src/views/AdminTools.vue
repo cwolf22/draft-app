@@ -2,7 +2,7 @@
   <v-container grid-list-md>
     <v-data-iterator
         :items="items"
-        :rows-per-page-items="[2]"
+        :rows-per-page-items="[4]"
         :pagination.sync="pagination"
         content-tag="v-layout"
         row
@@ -22,8 +22,6 @@
           >
             <v-card class="p4">
               <v-card-title><h4>{{ props.item.title }}</h4>
-                <v-spacer></v-spacer>
-                <div style="text-transform: capitalize;">{{ props.item.title }}</div>
               </v-card-title>
               <v-divider></v-divider>
               <v-list dense>
@@ -33,7 +31,7 @@
                 <v-divider light></v-divider>
                 <v-card-actions>
                   <v-layout justify-center>
-                    <v-btn>Configure</v-btn>
+                    <v-btn @click="forms[props.item.form] = true">Configure</v-btn>
                   </v-layout>
                 </v-card-actions>
               </v-list>
@@ -41,21 +39,34 @@
           </v-flex>
         </template>
       </v-data-iterator>
+    <draft-form :show="forms.draft" @close="forms.draft = false"></draft-form>
   </v-container>
 </template>
 
 <script>
+import DraftForm from '@/components/DraftForm'
 export default {
   props: ['isAdmin', 'league'],
+  components: {
+    DraftForm
+  },
     data() {
         return {
             pagination: {
-                rowsPerPage: 2,
+                rowsPerPage: 4,
             },
             items: [
-                {title: 'Draft', text: 'Draft has not yet been set up'},
-                {title: 'Free Agency', text: 'Free Agency has not yet been set up'}
-            ]
+                {title: 'Draft', text: 'Draft has not yet been set up.  Pick a draft date, or request feedback from owners.', form:'draft'},
+                {title: 'Rookie Draft', text: 'Rookie Draft has not yet been set up', form:'rookie'},
+                {title: 'Keepers', text: 'Keepers has not yet been set up', form:'keeper'},
+                {title: 'Restricted Free Agency', text: 'Restricted Free Agency has not yet been set up', form:'RFA'}
+            ],
+            forms: {
+              draft: false,
+              rookie: false,
+              keeper: false,
+              RFA: false
+            }
         }
     },
     mounted() {

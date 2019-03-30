@@ -29,6 +29,7 @@ const router = new Router({
       route('admin', 'Admin', 'AdminTools', { requiresAuth: true }),
       route('rosters', 'Rosters', 'Rosters', { requiresAuth: true }),
       route('', 'Overview', 'LeagueOverview', { requiresAuth: true }),
+      route('my-team', 'My-Team', 'MyTeam', { requiresAuth: true }),
       route('rankings', 'Rankings', 'PlaceHolder', { requiresAuth: true }),
       route('actions', 'Actions', 'PlaceHolder', { requiresAuth: true }),
     ]),

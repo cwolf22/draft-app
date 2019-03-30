@@ -55,10 +55,5 @@ export default {
       },
     };
   },
-  methods: {
-    getTeam(league) {
-      return league.teams.find(team => team.id == league.teamId);
-    },
-  },
 };
 </script>

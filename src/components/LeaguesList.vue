@@ -58,7 +58,7 @@
               <v-list dense>
                 <v-list-tile>
                   <v-list-tile-content>Team:</v-list-tile-content>
-                  <v-list-tile-content class="align-end">{{ getTeam(props.item).name }}</v-list-tile-content>
+                  <v-list-tile-content class="align-end">{{ GET_TEAM(props.item.id).name }}</v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
                   <v-list-tile-content>Team Id:</v-list-tile-content>
@@ -75,7 +75,7 @@
                  <v-divider light></v-divider>
                 <v-card-actions>
                   <v-layout>
-                    <v-btn v-if="getTeam(props.item).owners[0].isLeagueManager">Admin</v-btn>
+                    <v-btn v-if="GET_TEAM(props.item.id).owners[0].isLeagueManager">Admin</v-btn>
                     <v-spacer></v-spacer>
                     <v-btn>View</v-btn>
                   </v-layout>
@@ -102,15 +102,9 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['LEAGUES']),
+    ...mapGetters(['LEAGUES', 'GET_TEAM']),
     leagues() {
       return this.LEAGUES.filter(league => league.sport == this.sport);
-    },
-
-  },
-  methods: {
-    getTeam(league) {
-      return league.teams.find(team => team.id == league.teamId);
     },
   },
 };

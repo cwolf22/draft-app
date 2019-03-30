@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexPersistence from 'vuex-persist';
 import DrafterService from '@/sdk/DrafterService';
-import { constants } from 'zlib';
 
 const { drafterAPI } = new DrafterService();
 Vue.use(Vuex);
@@ -27,6 +26,11 @@ export default new Vuex.Store({
     AUTHENTICATED: state => state.token.length > 0,
     LEAGUES: state => state.leagues,
     LEAGUES_LOADED: state => state.leagueLoaded,
+    GET_LEAGUE: state => id => state.leagues.find(l => l.id == id),
+    GET_TEAM: (state, getters) => id => {
+      const league = getters.GET_LEAGUE(id);
+      return league.teams.find(team => team.id == league.teamId);
+    }
   },
   mutations: {
     SET_USER: (state, payload) => {

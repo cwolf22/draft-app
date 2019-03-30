@@ -10,13 +10,14 @@
     </v-container>
     <v-tabs v-else v-model="active">
       <v-tab ripple :to="{name: 'Overview'}">Overview</v-tab>
+      <v-tab ripple :to="{name: 'My-Team'}">My Team</v-tab>
       <v-tab ripple :to="{name: 'Rosters'}">Rosters</v-tab>
       <v-tab ripple :to="{name: 'Actions'}">Action Items</v-tab>
       <v-tab ripple :to="{name: 'Rankings'}">Player Rankings</v-tab>
       <v-tab ripple :disabled="!isAdmin" :to="{name: 'Admin'}">Admin</v-tab>
     </v-tabs>
     <transition name="slide-x-reverse-transition" mode="out-in">
-      <router-view v-if="league" :league="league" :sport="sport" :isAdmin="isAdmin" />
+      <router-view v-if="GET_LEAGUE(this.$route.params.id)" :league="GET_LEAGUE(this.$route.params.id)" :sport="sport" :isAdmin="isAdmin" />
     </transition>
   </v-container>
 </template>
@@ -31,10 +32,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['LEAGUES', 'LEAGUES_LOADED']),
-    league() {
-      return this.LEAGUES.find(l => l.id == this.$route.params.id);
-    },
+    ...mapGetters(['GET_LEAGUE', 'LEAGUES_LOADED']),
     sport() {
       return this.$route.params.sport;
     },
@@ -58,11 +56,12 @@ export default {
       ];
     },
     isAdmin() {
-      if (!this.league) return false;
+      const league = this.GET_LEAGUE(this.$route.params.id);
+      if (!league) return false;
       let owner = null;
-      this.league.teams.find((team) => {
+      league.teams.find((team) => {
         team.owners.find((mngr) => {
-          if (mngr.id !== this.league.ownerId) return false;
+          if (mngr.id !== league.ownerId) return false;
           owner = mngr;
           return true;
         });
