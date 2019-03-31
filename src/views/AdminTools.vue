@@ -31,7 +31,7 @@
                 <v-divider light></v-divider>
                 <v-card-actions>
                   <v-layout justify-center>
-                    <v-btn @click="forms[props.item.form] = true">Configure</v-btn>
+                    <v-btn @click="forms[props.item.form] = true">Matrix</v-btn>
                   </v-layout>
                 </v-card-actions>
               </v-list>
