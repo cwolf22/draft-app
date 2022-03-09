@@ -31,3 +31,4 @@ export default {
     align-items: flex-end;
 }
 </style>
+

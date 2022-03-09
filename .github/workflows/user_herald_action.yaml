@@ -17,3 +17,4 @@ jobs:
           DEBUG: '*'
       - name: Store applied rules to file
         run: echo '${{ fromJSON(steps.herald.outputs.appliedRules) }}'
+
